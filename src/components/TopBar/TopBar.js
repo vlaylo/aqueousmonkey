@@ -5,7 +5,7 @@ import {NavLink} from 'react-router-dom';
 
 
 const style = {
-  color: 'white',
+  color: 'lightgray',
 }
 export default class TopBar extends Component {
 
@@ -25,7 +25,7 @@ export default class TopBar extends Component {
   render() {
     return (
       <div >
-      <Navbar style={{marginBottom: "-15px",}} className={classes.Navbar} inverse collapseOnSelect>
+      <Navbar style={{marginBottom: "-15px"}} className={classes.Navbar} inverse collapseOnSelect>
           <Navbar.Header >
             <Navbar.Brand>
             </Navbar.Brand>

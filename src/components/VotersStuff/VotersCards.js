@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import classes from './VotersCards.css'
 import ReportsPage from '../ReportsStuff/ReportsPage';
+import Fade from 'react-reveal/'
 
 export default class VotersCards extends Component {
 
@@ -54,19 +55,21 @@ export default class VotersCards extends Component {
         //VIEW  INFORMATION ABOUT SELECTION
         if (searched && results && view) {
           return(
+            <Fade duration={1000}>
             <div>
               <ReportsPage
                 name={view}>
               </ReportsPage>
               <button
-                className={classes.Submit}
+                className={classes.Submit2}
                 onClick={this.returnHandler}>
                 SEARCH AGAIN
               </button>
             </div>
-                 
+            </Fade>    
         )
       };
+      
         //DISPLAY NAME RESULTS AFTER SEARCHING
         if (searched && results) {
           return (
@@ -94,16 +97,11 @@ export default class VotersCards extends Component {
               <div>
                 <div className={classes.Query}>Showing results for: "{query}" </div>
                 {results.data.map(result => ( 
-                  <div className={classes.Cards} key={result.voter_reg_num}  onClick={() => this.handleViewInfo(result.voter_reg_num)} key={result.voter_reg_num}>
+                  <Fade duration={1000}><div className={classes.Cards} key={result.voter_reg_num}  onClick={() => this.handleViewInfo(result.voter_reg_num)} key={result.voter_reg_num}>
                     <div className={classes.Heading}>{result.name}</div>
-                  </div>
+                  </div></Fade>
                 ))}
               </div>
-              <button
-                onClick={this.returnHandler}
-                className={classes.Submit}>
-                Return
-              </button>
             </div>
         );
     

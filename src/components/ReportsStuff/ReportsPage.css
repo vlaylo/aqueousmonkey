@@ -9,21 +9,28 @@
     border-radius: 20px;
 }
 
+.Heading, .Subheading {
+    margin: 15px auto;
+    width: 85vw; 
+    height: auto;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0px 3px 6px lightgray;
+    border-radius: 20px;
+    background-color: #f2f2f2;
+}
+
 .Heading {
-   
-    color: purple;
-    text-align: center;
-    font-size: 3rem;
-    padding: 5px;
+    font-size: 2rem;
+    color: #8F80B7;
 }
 
-.SubHeading {
-    text-align: center;
+.Subheading {
     font-size: 1.5rem;
-    padding: 5px;
+    color: #707070;
 }
 
-.Submit {
+.Submit, .Submit2 {
     background-color: #6EBA44;
     border: none;
     outline: none;
@@ -35,7 +42,12 @@
     min-height: 30px;
 }
 
-.Submit:active {
+.Submit:active, .Submit2:active {
     background: lightgreen;
     transition: 50ms;
+}
+.Submit2 {
+    background-color:#404040;
+    display: block;
+    margin: 10px auto;
 }

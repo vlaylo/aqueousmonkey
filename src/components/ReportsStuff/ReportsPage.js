@@ -67,7 +67,7 @@ returnHandler = () => {
                 <br/>
 
                 <button
-                    className={classes.Submit} 
+                    className={classes.Submit2} 
                     onClick={this.handleViewMoreInfo}>VIEW MORE INFO</button>
            </div>
           );
@@ -75,7 +75,7 @@ returnHandler = () => {
     } else if (this.props.name && showInfo) {
         return (
             <div>
-                <div className={classes.Cards}>
+                <div>
                        {Object.values(voters).map(voter => (
                     <VoterInformation
                         name={voter['0'].name}
@@ -95,19 +95,14 @@ returnHandler = () => {
                         WRD={voter['0'].WRD}/>
                 ))}
                 </div>
-                <div className={classes.Cards}>
-                    <div className={classes.Heading}>VOTING HISTORY</div>
+                <div className={classes.Heading}>VOTING HISTORY</div>
+                <div className={classes.Subheading}>
                     {elections.data.map(election => ( 
                         <div key={election.SFID} className="cards">
                             <div>{election.ElectionDate} ({election.HowVoted}) - {election.Party}</div>
                         </div>
                       ))}
                 </div>
-                <button
-                    className={classes.Submit}
-                    onClick={this.returnHandler}>
-                        Return
-                    </button>
             </div>
         );
     };

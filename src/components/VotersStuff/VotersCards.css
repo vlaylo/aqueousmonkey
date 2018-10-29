@@ -47,7 +47,7 @@
     transition: 200ms;
 }
 
-.Submit {
+.Submit, .Submit2 {
     background-color: #6EBA44;
     border: none;
     outline: none;
@@ -59,11 +59,14 @@
     min-height: 30px;
 }
 
-.Submit:active {
+.Submit:active, .Submit2:active {
     background: lightgreen;
     transition: 50ms;
 }
-
+.Submit2 {
+    display: block;
+    margin: auto;
+}
 .Data {
     width: auto;
     display: block;

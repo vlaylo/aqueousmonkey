@@ -5,6 +5,7 @@ const port = process.env.PORT || 5000;
 const router = express.Router();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const metaphone = require('metaphone')
 const routes = require('./routes')
 
 const connection = mysql.createConnection({
