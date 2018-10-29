@@ -1,0 +1,19 @@
+.Login {
+    padding-top: 150px;
+}
+
+.Logo {
+    display: block;
+    margin: auto;
+    width: 200px;
+    height: auto;
+}
+
+.Container{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #a183bd;
+    background: url('../../assets/NewFaceG.jpg');
+    background-repeat: no-repeat;
+}

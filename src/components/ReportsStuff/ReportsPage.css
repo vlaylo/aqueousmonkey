@@ -1,0 +1,41 @@
+.Cards {
+    margin: auto;
+    width: 85vw; 
+    height: auto;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0px 3px 6px lightgray;
+    border-radius: 20px;
+}
+
+.Heading {
+   
+    color: purple;
+    text-align: center;
+    font-size: 3rem;
+    padding: 5px;
+}
+
+.SubHeading {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 5px;
+}
+
+.Submit {
+    background-color: #6EBA44;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: #FFFFFF;
+    width: 30vw;
+    transition: 50ms;
+    box-shadow: 0 3px 6px lightgray;
+    min-height: 30px;
+}
+
+.Submit:active {
+    background: lightgreen;
+    transition: 50ms;
+}

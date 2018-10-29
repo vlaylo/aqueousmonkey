@@ -1,0 +1,51 @@
+.LoginForm {
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin: auto;
+    font-size: 1.8em;
+}
+
+.Info {
+    background: none;
+    height: 5vh;
+    width: 60%;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 2px solid white;
+    transition: 200ms;
+    padding-left: 10px;
+    outline:none;
+    color: white;
+}
+
+.Info::placeholder {
+    color: lightgray;
+}
+
+.Info:focus {
+    border-bottom: lightgreen 2px solid;
+    transition: 200ms;
+    outline: none;
+}
+
+
+
+
+
+.Submit {
+    background: none;
+    color: lightgreen;
+    border: 2px solid white;
+    transition: 100ms;
+    font-size: 1em;
+    padding: 15px 80px;
+    transform: scale(0.7)
+}
+
+.Submit:hover {
+    background: lightgreen;
+    transition: 100ms;
+    color:white;
+}
