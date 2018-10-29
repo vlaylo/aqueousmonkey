@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './Walksheet.css';
 import VoterInformation from '../../../components/ReportsStuff/VoterInformation/VoterInformation'
-
+import {Select, InputLabel, FormControl, MenuItem} from '@material-ui/core'
 
 export default class Walksheet extends Component {
 
@@ -111,6 +111,19 @@ handleViewMoreInfo = (voterID) => {
         <option key={ward.WRD} value={ward.WRD}>Ward {ward.WRD}</option>
       ))}
       </select>
+
+    const ward = 
+          <div>
+            <InputLabel>Ward</InputLabel>
+            <Select>
+            {wrd.data.sort().map(ward => (
+              <option ref="WRD" key={ward.WRD} value={ward.WRD}>Ward {ward.WRD}</option>
+            ))}
+            </Select>
+          </div>
+
+       
+       
        if (searched && voters && (!viewBy || viewBy) && viewVoterInfo) {
         return (
           <div>
@@ -188,7 +201,7 @@ handleViewMoreInfo = (voterID) => {
             </input>
             {wards}
             {precincts}
-            <select ref="VScore" onChange={this.wardQueryHandler}>
+            <select ref="VScore"  onChange={this.wardQueryHandler}>
                 <option value="100">100</option>
                 <option value="90">90</option>
                 <option value="80">80</option>
@@ -285,7 +298,7 @@ handleViewMoreInfo = (voterID) => {
     <div>
       <form>
         View By Street:
-          <select onChange={this.handleSort}>
+          <select className={classes.Select} onChange={this.handleSort}>
             <option value="">View All</option>
           {addresses.sort().map(address => (
             <option value={address} key={address}>

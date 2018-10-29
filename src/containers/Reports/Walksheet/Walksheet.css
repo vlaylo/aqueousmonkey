@@ -2,3 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
+
+.Select {
+    border-radius: 5px;
+}

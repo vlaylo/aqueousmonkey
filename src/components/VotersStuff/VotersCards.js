@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classes from './VotersCards.css'
 import ReportsPage from '../ReportsStuff/ReportsPage';
 import Fade from 'react-reveal/'
+import {Button} from '@material-ui/core'
 
 export default class VotersCards extends Component {
 
