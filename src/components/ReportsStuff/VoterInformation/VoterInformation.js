@@ -4,7 +4,7 @@ import classes from './VoterInformation.css'
 const VoterInformation = (props) => {
     return (
            <div>
-                <div key={props.voter_reg_num} >
+                <div className={classes.Cards} key={props.voter_reg_num} >
                     <div className={classes.Heading}>Voter Information</div>
                     <div className={classes.SubHeading}>{props.name}</div>
                     <div className={classes.SubHeading}>VoterID: {props.voter_reg_num}</div>
