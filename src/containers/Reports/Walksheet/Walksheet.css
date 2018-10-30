@@ -6,3 +6,21 @@
 .Select {
     border-radius: 5px;
 }
+
+.Submit, .Submit2 {
+    background-color: #6EBA44;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: #FFFFFF;
+    width: 15vw;
+    transition: 50ms;
+    box-shadow: 0 3px 6px lightgray;
+    min-height: 30px;
+    margin-top: 15px;
+}
+
+.Submit:active, .Submit2:active {
+    background: lightgreen;
+    transition: 50ms;
+}

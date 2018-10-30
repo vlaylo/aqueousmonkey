@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import classes from './Walksheet.css';
 import VoterInformation from '../../../components/ReportsStuff/VoterInformation/VoterInformation'
-import {Select, InputLabel, FormControl, MenuItem} from '@material-ui/core'
+import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 
 export default class Walksheet extends Component {
+
+  constructor() {
+    super();
+    this.WRD = React.createRef();
+    this.PCT = React.createRef();
+    this.VScore = React.createRef();
+  }
 
   state = {
     elections: [],
@@ -21,9 +28,11 @@ export default class Walksheet extends Component {
   
   handleSubmit = (e) => {
     e.preventDefault();
-    const ward = this.refs.WRD.value;
-    const precinct = this.refs.PCT.value
-    const vscore = this.refs.VScore.value
+    //const ward = this.refs.WRD.value
+    const ward = this.WRD.value;
+    //const precinct = this.refs.PCT.value; 
+    const precinct = this.PCT.value;
+    const vscore = this.VScore.value;
     fetch(`http://localhost:5000/walklist?WRD=${ward}&PCT=${precinct}&VoteScore=${vscore}` )
     .then(res => res.json()) 
     .then(json => {
@@ -86,6 +95,7 @@ export default class Walksheet extends Component {
     })
 }
 
+
 handleViewMoreInfo = (voterID) => {
       fetch(`http://localhost:5000/electiondata?voter_reg_num=${voterID}` )
       .then(res => res.json())
@@ -97,30 +107,35 @@ handleViewMoreInfo = (voterID) => {
 
   render() {
     let {viewBy, results, searched, pct, wrd, clicked, voters, viewVoterInfo, elections} = this.state;
+    console.log(wrd);
   if (pct && wrd) {
-    const precincts = 
+    const precinct = 
         <select ref="PCT">
           {pct.data.map(precinct => (
             <option key={precinct.PCT} value={precinct.PCT}>Precinct {precinct.PCT}</option>
           ))}
         </select>
 
-    const wards = 
+    const precincts = 
+      <FormControl inputRef={ref => {this.PCT=ref;}} componentClass="select">
+        {pct.data.map(precinct => (
+          <option key={precinct.PCT} value={precinct.PCT}>Precinct {precinct.PCT}</option>
+        ))}
+      </FormControl>
+
+    const ward = 
       <select ref="WRD">
       {wrd.data.sort().map(ward => (
         <option key={ward.WRD} value={ward.WRD}>Ward {ward.WRD}</option>
       ))}
       </select>
 
-    const ward = 
-          <div>
-            <InputLabel>Ward</InputLabel>
-            <Select>
-            {wrd.data.sort().map(ward => (
-              <option ref="WRD" key={ward.WRD} value={ward.WRD}>Ward {ward.WRD}</option>
-            ))}
-            </Select>
-          </div>
+    const wards = 
+            <FormControl inputRef={ref => {this.WRD =ref;}} componentClass="select">
+              {wrd.data.sort().map(ward => (
+                <option key={ward.WRD} value={ward.WRD}>Ward {ward.WRD}</option>
+              ))}
+            </FormControl>
 
        
        
@@ -196,12 +211,13 @@ handleViewMoreInfo = (voterID) => {
         <div>
           <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
             <input
+              className={classes.Submit}
               type="submit" 
               value="RUN">
             </input>
             {wards}
             {precincts}
-            <select ref="VScore"  onChange={this.wardQueryHandler}>
+            <FormControl componentClass="select" inputRef={ref => {this.VScore=ref}} >
                 <option value="100">100</option>
                 <option value="90">90</option>
                 <option value="80">80</option>
@@ -213,7 +229,7 @@ handleViewMoreInfo = (voterID) => {
                 <option value="20">20</option>
                 <option value="10">10</option>
                 <option value="0">0</option>
-            </select>
+            </FormControl>
           </form>
         </div>
       );
@@ -249,20 +265,13 @@ handleViewMoreInfo = (voterID) => {
           {sheet}
           <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
             <input
+              className={classes.Submit} 
               type="submit" 
               value="RUN">
             </input>
-            <select ref="WRD" onChange={this.wardQueryHandler}>
-              {wrd.data.sort().map(ward => (
-                <option key={ward.WRD} value={ward.WRD}>Ward {ward.WRD}</option>
-              ))}
-            </select>
-             <select ref="PCT" onChange={this.wardQueryHandler}>
-              {pct.data.map(precinct => (
-                <option key={precinct.PCT} value={precinct.PCT}>Precinct {precinct.PCT}</option>
-              ))}
-            </select>
-            <select ref="VScore" onChange={this.wardQueryHandler}>
+            {wards}
+            {precincts}
+            <FormControl componentClass="select" inputRef={ref => {this.VScore=ref}} >
                 <option value="100">100</option>
                 <option value="90">90</option>
                 <option value="80">80</option>
@@ -274,7 +283,7 @@ handleViewMoreInfo = (voterID) => {
                 <option value="20">20</option>
                 <option value="10">10</option>
                 <option value="0">0</option>
-            </select>
+            </FormControl>
           </form> 
         </div>
       )
@@ -310,6 +319,7 @@ handleViewMoreInfo = (voterID) => {
       {sheet}
       <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
         <input
+          className={classes.Submit} 
           type="submit" 
           value="RUN"></input>
             <select ref="WRD" onChange={this.wardQueryHandler}>
