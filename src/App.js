@@ -22,11 +22,11 @@ class App extends Component {
           <div className={classes.App}>
             <Switch>
               <Route exact path='/' component={Login}/>
-              <div>
-                <Route path='/home' component={Home}/>
-                <Route path='/voters' component={Voters}/>
-                <Route path='/reports' component={Reports}/>
-              </div>
+                <div>
+                  <Route path='/home' component={Home}/>
+                  <Route path='/voters' component={Voters}/>
+                  <Route path='/reports' component={Reports}/>
+                </div>
             </Switch>
           </div>
         </Aux>
