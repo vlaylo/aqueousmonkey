@@ -24,3 +24,10 @@
     background: lightgreen;
     transition: 50ms;
 }
+
+.Select {
+    width: 20vw;
+    margin: 10px 10px;
+    display: inline;
+    max-height: 35px;
+}

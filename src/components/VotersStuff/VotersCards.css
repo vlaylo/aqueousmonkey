@@ -57,6 +57,7 @@
     transition: 50ms;
     box-shadow: 0 3px 6px lightgray;
     min-height: 30px;
+    font-weight: 200;
 }
 
 .Submit:active, .Submit2:active {

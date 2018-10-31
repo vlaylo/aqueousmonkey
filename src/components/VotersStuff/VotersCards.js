@@ -87,7 +87,7 @@ export default class VotersCards extends Component {
                     required
                     /> &nbsp;
                 <input
-                    value="Search"
+                    value="SEARCH"
                     className={classes.Submit}
                     onClick={this.handleResults}
                     type="submit"
@@ -121,7 +121,7 @@ export default class VotersCards extends Component {
                     required
                     /> &nbsp;
                 <input
-                    value="Search"
+                    value="SEARCH"
                     className={classes.Submit}
                     onClick={this.handleResults}
                     type="submit"
