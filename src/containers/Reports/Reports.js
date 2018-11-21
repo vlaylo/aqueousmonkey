@@ -38,7 +38,6 @@ export default class Reports extends Component {
         <Walksheet
           voterID={this.handler}
         />
-        <div>MAKE CALLS </div>   
       </div>
     );
   }

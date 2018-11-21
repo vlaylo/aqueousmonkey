@@ -7,6 +7,7 @@ import {Route, Switch} from 'react-router-dom'
 import Reports from './containers/Reports/Reports';
 import TopBar from './components/TopBar/TopBar';
 import Aux from './auxilliary'
+import BottomBar from './components/BottomBar/BottomBar';
 
 
 class App extends Component {
@@ -18,14 +19,14 @@ class App extends Component {
   render() {
     return (
         <Aux>
-          <TopBar/>
           <div className={classes.App}>
             <Switch>
               <Route exact path='/' component={Login}/>
-                <div>
-                  <Route path='/home' component={Home}/>
+              <Route path='/home' component={Home}/>
+                  <div>
                   <Route path='/voters' component={Voters}/>
                   <Route path='/reports' component={Reports}/>
+                  <BottomBar/>
                 </div>
             </Switch>
           </div>

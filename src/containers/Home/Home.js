@@ -13,6 +13,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className={classes.Home}>
+        <span className={classes.Welcome}>Welcome to <span className={classes.Sinfron}>SinFron.</span></span>
         <Fade>
           <Cards/>
         </Fade>

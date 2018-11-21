@@ -1,6 +1,23 @@
 .Home {
-    height: 100vh;
-    background-color:#DFDFDF;
     padding: 0;
     margin: 0;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #a183bd;
+    background: url('../../assets/NewFaceG.jpg');
+    background-repeat: no-repeat;
+}
+
+.Welcome {
+    color: #D1D1D1;
+    position: absolute;
+    font-size: 5rem;
+    margin-top: 10vh;
+    left: 25px;
+}
+
+.Sinfron {
+    color: #6EBA44;
+    font-weight: bold;
 }

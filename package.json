@@ -5,10 +5,11 @@
   "private": true,
   "engines": {
     "npm": "5.6.0",
-    "node": "8.11.3"
+    "node": "v8.11.3"
   },
   "dependencies": {
     "@material-ui/core": "^3.3.2",
+    "@material-ui/icons": "^3.0.1",
     "autoprefixer": "7.1.6",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",

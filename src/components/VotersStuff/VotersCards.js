@@ -18,6 +18,13 @@ export default class VotersCards extends Component {
         if (this.state.searched === false) {
           this.setState({searched: !this.state.searched})
         };
+        if (this.state.searched === false) {
+          this.setState({searched: !this.state.searched})
+        };
+        if (this.state.view) {
+          this.setState({view: null})
+        };
+
         const voterName = this.refs.name.value;
         fetch('http://localhost:5000/voterdata?name=' + voterName)
         .then(res => res.json()) 
@@ -56,18 +63,31 @@ export default class VotersCards extends Component {
         //VIEW  INFORMATION ABOUT SELECTION
         if (searched && results && view) {
           return(
-            <Fade duration={1000}>
             <div>
+              <div>
+                <form className={classes.SearchForm} onSubmit={this.handleSubmit} method="get" action="/voterdata">
+                    <input
+                        className={classes.Input}
+                        type="search"
+                        placeholder="SEARCH"
+                        onChange={this.queryHandler}
+                        name="name"
+                        ref="name"
+                        required
+                        /> &nbsp;
+                    <input
+                        value="SEARCH"
+                        className={classes.Submit}
+                        onClick={this.handleResults}
+                        type="submit"
+                        /> 
+                    </form>
+              <div></div>
+            </div>
               <ReportsPage
                 name={view}>
               </ReportsPage>
-              <button
-                className={classes.Submit2}
-                onClick={this.returnHandler}>
-                SEARCH AGAIN
-              </button>
             </div>
-            </Fade>    
         )
       };
       
@@ -76,31 +96,42 @@ export default class VotersCards extends Component {
           return (
             <div>
               <div>
-          <form className={classes.SearchForm} onSubmit={this.handleSubmit} method="get" action="/voterdata">
-                <input
-                    className={classes.Input}
-                    type="search"
-                    placeholder="SEARCH"
-                    onChange={this.queryHandler}
-                    name="name"
-                    ref="name"
-                    required
-                    /> &nbsp;
-                <input
-                    value="SEARCH"
-                    className={classes.Submit}
-                    onClick={this.handleResults}
-                    type="submit"
-                    /> 
-              </form>
+                <form className={classes.SearchForm} onSubmit={this.handleSubmit} method="get" action="/voterdata">
+                    <input
+                        className={classes.Input}
+                        type="search"
+                        placeholder="SEARCH"
+                        onChange={this.queryHandler}
+                        name="name"
+                        ref="name"
+                        required
+                        /> &nbsp;
+                    <input
+                        value="SEARCH"
+                        className={classes.Submit}
+                        onClick={this.handleResults}
+                        type="submit"
+                        /> 
+                    </form>
               <div></div>
-         </div>
+            </div>
               <div>
                 <div className={classes.Query}>Showing results for: "{query}" </div>
                 {results.data.map(result => ( 
-                  <Fade duration={1000}><div className={classes.Cards} key={result.voter_reg_num}  onClick={() => this.handleViewInfo(result.voter_reg_num)} key={result.voter_reg_num}>
-                    <div className={classes.Heading}>{result.name}</div>
-                  </div></Fade>
+                  <Fade duration={1000}>
+                    <div className={classes.Cards} key={result.voter_reg_num}  onClick={() => this.handleViewInfo(result.voter_reg_num)} key={result.voter_reg_num}>
+                      <div className={classes.Avatar}>{result.name['1']}{result.name.split(" ").pop().charAt(0)}</div>
+                      <div className={classes.Info}>
+                        <div className={classes.Heading}>{result.name}</div>
+                            <div className={classes.SubHeading}>
+                              <div><span className={classes.SubSubHeading}>Voter ID:</span> {result.voter_reg_num}</div>
+                              <div><span className={classes.SubSubHeading}>Voter Status:</span>{result['Voter Status']}</div>
+                              <div><span className={classes.SubSubHeading}>Birth Year:</span>{result['Birth Year']}</div>
+                              <div><span className={classes.SubSubHeading}>Gender: </span> {result.Gender}</div>
+                            </div>
+                        </div>
+                    </div>
+                  </Fade>
                 ))}
               </div>
             </div>

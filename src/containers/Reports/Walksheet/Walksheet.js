@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './Walksheet.css';
 import VoterInformation from '../../../components/ReportsStuff/VoterInformation/VoterInformation'
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
+import {Call} from '@material-ui/icons/'
 
 export default class Walksheet extends Component {
 
@@ -133,7 +134,7 @@ handleViewMoreInfo = (voterID) => {
     const wards = 
             <FormControl className={classes.Select} inputRef={ref => {this.WRD =ref;}} componentClass="select">
               {wrd.data.sort().map(ward => (
-                <option key={ward.WRD} value={ward.WRD}>Ward {ward.WRD}</option>
+                <option key={ward.WRD} value={ward.WRD}> {ward.WRD}</option>
               ))}
             </FormControl>
 
@@ -198,7 +199,7 @@ handleViewMoreInfo = (voterID) => {
         <br/>
         {Object.values(voters).map(voter=>( 
           <button
-            className={classes.Submit} 
+            className={classes.Submit2} 
             onClick={() => this.handleViewMoreInfo(voter[0].voter_reg_num)}>VIEW MORE INFO
         </button>
         ))}
@@ -210,11 +211,6 @@ handleViewMoreInfo = (voterID) => {
       return (
         <div>
           <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
-            <input
-              className={classes.Submit}
-              type="submit" 
-              value="RUN">
-            </input>
             {wards}
             {precincts}
             <FormControl className={classes.Select} componentClass="select" inputRef={ref => {this.VScore=ref}} >
@@ -230,6 +226,11 @@ handleViewMoreInfo = (voterID) => {
                 <option value="10">10</option>
                 <option value="0">0</option>
             </FormControl>
+            <input
+              className={classes.Submit}
+              type="submit" 
+              value="RUN">
+            </input>
           </form>
         </div>
       );
@@ -238,13 +239,35 @@ handleViewMoreInfo = (voterID) => {
     if (searched && !viewBy) {
         const sheet = 
           <div>
-          {results.data.map(result => ( 
-            <div onClick={() => this.nameClickHandler(result.name)} className={classes.WalksheetTable} key={result.voter_reg_num} key={result.voter_reg_num}>
-              <div className={classes.Name}>{result.name}</div>
-              <div >{result.Address}</div>
-              <div >{result.CandScore}/{result.VoteScore}</div>
+          {results.data.map(result => {
+            if (result.Phone) {
+              return (
+              <div className={classes.WalksheetTable} key={result.voter_reg_num} key={result.voter_reg_num}>
+              <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                <div className={classes.Name}>{result.name}</div>
+                <div className={classes.Address}>{result.Address}</div>
+                <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+              </div>
+              <div className={classes.Divider}></div>
+              <div className={classes.Phone}><a href="tel:{result.Phone}"><Call style={{color: '#8F80B7', transform: 'scale(-1.5, 1.5)'}}/></a> </div>
+            </div>)
+             } else {
+               return (
+                <div className={classes.WalksheetTable} key={result.voter_reg_num} key={result.voter_reg_num}>
+                <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                <div className={classes.Name}>{result.name}</div>
+                <div className={classes.Address}>{result.Address}</div>
+                <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+              </div>
+
             </div>
-          ))}
+               )
+             }
+          })}
           </div>;
         
         const addresses = results.data.map(address => (address.Address).split(" ").slice(1,4).join(' ')).filter(this.onlyUnique);
@@ -262,13 +285,7 @@ handleViewMoreInfo = (voterID) => {
               ))}
               </select>
         </form>
-          {sheet}
-          <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
-            <input
-              className={classes.Submit} 
-              type="submit" 
-              value="RUN">
-            </input>
+        <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
             {wards}
             {precincts}
             <FormControl className={classes.Select} componentClass="select" inputRef={ref => {this.VScore=ref}} >
@@ -284,7 +301,13 @@ handleViewMoreInfo = (voterID) => {
                 <option value="10">10</option>
                 <option value="0">0</option>
             </FormControl>
+            <input
+              className={classes.Submit} 
+              type="submit" 
+              value="RUN">
+            </input>
           </form> 
+          {sheet}
         </div>
       )
     }; 
@@ -318,11 +341,6 @@ handleViewMoreInfo = (voterID) => {
       </form>
       {sheet}
       <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
-        <input
-          className={classes.Submit} 
-          type="submit" 
-          value="RUN">
-        </input>
           {wards}
           {precincts}
             <FormControl className={classes.Select} ref={ref => {this.VScore =ref}}  componentClass="select">
@@ -338,6 +356,11 @@ handleViewMoreInfo = (voterID) => {
                 <option value="10">10</option>
                 <option value="0">0</option>
             </FormControl>
+            <input
+              className={classes.Submit} 
+              type="submit" 
+              value="RUN">
+            </input>
           </form> 
     </div>
   )

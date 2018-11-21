@@ -1,10 +1,30 @@
 .WalksheetTable {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr 1fr;
+    background-color: #ebebeb;
+    margin: 20px;
+    min-height: 50px;
+    width: auto;
+    align-content: center;
+    justify-items: start;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 6px lightgray;
+    color: #707070;
 }
 
+form {
+    text-align: center;
+    position: sticky;
+    top: 0;
+    margin-bottom: 20px;
+    background: #DFDFDF;
+}
 .Select {
     border-radius: 5px;
+    max-height: 30px !important;
+    margin: 3px !important;
+    background-color: white;
 }
 
 .Submit, .Submit2 {
@@ -13,11 +33,23 @@
     outline: none;
     border-radius: 5px;
     color: #FFFFFF;
-    width: 15vw;
+    width: 20vw;
     transition: 50ms;
     box-shadow: 0 3px 6px lightgray;
     min-height: 30px;
     margin-top: 15px;
+    margin: 15px 5px;
+    font-size: 1.5rem;
+}
+
+.Submit2{ 
+    background-color: #1d1d1d;
+    padding: 15px;
+    margin: auto;
+    display: block; 
+    width: 30vw;
+    font-size: 1rem;
+
 }
 
 .Submit:active, .Submit2:active {
@@ -31,3 +63,80 @@
     display: inline;
     max-height: 35px;
 }
+
+.Info { 
+    cursor: pointer;
+    display: grid;
+    grid-template-areas:
+        "name name name" 
+        "address address address"
+        "birth status scores";
+    align-self: center;
+    margin-bottom: -10px;
+}
+
+.Name {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #8F80B7;
+    grid-area:  name;
+}
+
+.Address {
+    grid-area: address;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.BirthYear {
+    grid-area: birth;
+}
+
+.Status {
+    grid-area: status;
+}
+
+.Scores {
+    grid-area: scores;
+}
+
+.SubHeading {
+    font-weight: bold;
+}
+
+.Divider {
+    height: 40px; 
+    width: 5px;
+    justify-self: center;
+    margin: auto;
+}
+
+.Phone {
+    align-self: center;
+    justify-self: center;
+}
+
+.Cards {
+    margin: 15px auto 0 auto;
+    min-width: 90vw; 
+    max-width: 90vw;
+    height: auto;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0px 3px 6px lightgray;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    font-size: 1.5rem;
+    color: #707070
+}
+
+.Heading {
+    color: #8f80b7;
+    font-weight: bold;
+    font-size: 2.4rem;
+}
+
+.SubHeading {
+    color: #707070;
+    font-weight: bold;
+}
+

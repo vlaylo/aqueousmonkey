@@ -21,6 +21,22 @@ connection.connect(err => {
   }
 });
 
+
+/*const connection = mysql.createConnection({
+  host: 'us-cdbr-iron-east-01.cleardb.net',
+  database: 'heroku_bae143c0a0f8500',
+  user: 'bf4f3943e4b069',
+  password: "f4475fbc",
+  multipleStatements: true
+});
+
+connection.connect(err => {
+  if (err) {
+    return err;
+  }
+});*/
+
+app.use( express.static( `${__dirname}/../build` ) )
 app.use(cors());
 
 app.use(express.static(__dirname + '/src'));

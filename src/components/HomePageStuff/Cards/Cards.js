@@ -1,19 +1,23 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
+import MagnifyLogo from '../../../assets/sinfronmagnify.svg'
 
 
 import classes from './Cards.css'
 
 const Cards = (props) => (
   <div className={classes.Cards}>
-    <div className={classes.Welcome}>LOREM</div>
-    <a href="/voters" className={classes.Lookup}>VOTER LOOKUP</a>
-    <a href="/reports" className={classes.Precinct}>WALK PRECINCT</a>
+    <NavLink to='/voters' className={classes.Card}>
+      <span className={classes.Lookup}>VOTER LOOKUP</span>
+      <img src={MagnifyLogo} className={classes.Logo} />
+    </NavLink>
+    <NavLink to='/reports' className={classes.Card}>
+      <span className={classes.Precinct}>WALK PRECINCT</span>
+      <img src={MagnifyLogo} className={classes.Logo} />
+    </NavLink>    
     <div className={classes.Calls}>MAKE CALLS</div>
     <div className={classes.Logout}>LOGOUT</div>
-    <div className={classes.Questions}>Questions? Contact us at 777-777-7777 or 
-email@email.com</div>
   </div>
-)
+    )
 
 export default Cards;

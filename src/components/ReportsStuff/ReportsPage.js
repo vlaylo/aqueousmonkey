@@ -63,9 +63,6 @@ returnHandler = () => {
                         REP={voter['0'].REP}
                         WRD={voter['0'].WRD}/>
                 ))}
-
-                <br/>
-
                 <button
                     className={classes.Submit2} 
                     onClick={this.handleViewMoreInfo}>VIEW MORE INFO</button>
@@ -95,13 +92,17 @@ returnHandler = () => {
                         WRD={voter['0'].WRD}/>
                 ))}
                 </div>
-                <div className={classes.Heading}>VOTING HISTORY</div>
-                <div className={classes.Subheading}>
-                    {elections.data.map(election => ( 
-                        <div key={election.SFID} className="cards">
-                            <div>{election.ElectionDate} ({election.HowVoted}) - {election.Party}</div>
+                <div className={classes.Card}>
+                    <div className={classes.Heading}>VOTING HISTORY</div>
+                    <div className={classes.History}>
+                        <div className={classes.Subheading}>
+                            {elections.data.map(election => ( 
+                                <div key={election.SFID} className="cards">
+                                    <div>{election.ElectionDate} ({election.HowVoted}) - {election.Party}</div>
+                                </div>
+                              ))}
                         </div>
-                      ))}
+                    </div>
                 </div>
             </div>
         );
