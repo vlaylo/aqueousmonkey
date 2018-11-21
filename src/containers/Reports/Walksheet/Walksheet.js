@@ -365,7 +365,7 @@ handleViewMoreInfo = (voterID) => {
     </div>
   )
     };
-  } else return <div>COLLECTING DATA</div>
+  } else return <div>COLLECTING DATAS</div>
   }
     
 }
