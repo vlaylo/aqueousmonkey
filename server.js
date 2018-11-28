@@ -36,9 +36,9 @@ connection.connect(err => {
   }
 });*/
 
-app.use('/static', express.static(path.join(__dirname, 'client/build')));
-
-//app.use( express.static( `${__dirname}/../build` ) )
+//app.use(express.static(path.join(__dirname, 'client/build')));
+//app.use(express.static( `${__dirname}/../build` ) )
+app.use(express.static( __dirname + '/public' ) )
 app.use(cors());
 
 app.use(express.static(__dirname + '/src'));
