@@ -33,7 +33,7 @@ form {
     outline: none;
     border-radius: 5px;
     color: #FFFFFF;
-    width: 20vw;
+    width: 30vw;
     transition: 50ms;
     box-shadow: 0 3px 6px lightgray;
     min-height: 30px;
@@ -42,15 +42,14 @@ form {
     font-size: 1.5rem;
 }
 
-.Submit2{ 
-    background-color: #1d1d1d;
-    padding: 15px;
-    margin: auto;
-    display: block; 
-    width: 30vw;
-    font-size: 1rem;
-
+.Submit2 {
+    background-color:#1D1D1D;
+    display: block;
+    margin: 10px auto;
+    min-height: 36px;
+    font-size: 1.3rem;
 }
+
 
 .Submit:active, .Submit2:active {
     background: lightgreen;
@@ -116,7 +115,7 @@ form {
 }
 
 .Cards {
-    margin: 15px auto 0 auto;
+    margin: 0px auto 0 auto;
     min-width: 90vw; 
     max-width: 90vw;
     height: auto;
@@ -140,3 +139,7 @@ form {
     font-weight: bold;
 }
 
+.RunForm {
+    position: sticky;
+    bottom: 50px;
+}

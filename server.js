@@ -36,13 +36,15 @@ connection.connect(err => {
   }
 });*/
 
-app.use( express.static( `${__dirname}/../build` ) )
+app.use('/static', express.static(path.join(__dirname, 'client/build')));
+
+//app.use( express.static( `${__dirname}/../build` ) )
 app.use(cors());
 
 app.use(express.static(__dirname + '/src'));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
 
 app.use(router);
 

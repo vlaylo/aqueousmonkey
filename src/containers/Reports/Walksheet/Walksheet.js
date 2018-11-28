@@ -23,6 +23,9 @@ export default class Walksheet extends Component {
     wrd: null,
     voters: null,
     viewVoterInfo: false,
+    precinct: null,
+    ward: null,
+    vscore: null,
 
   }
 
@@ -40,7 +43,10 @@ export default class Walksheet extends Component {
       this.setState({
         results: json,
         searched: true,
-        viewBy: null
+        viewBy: null,
+        precinct: precinct,
+        ward: ward,
+        vscore: vscore
       })
     });
   };
@@ -96,6 +102,25 @@ export default class Walksheet extends Component {
     })
 }
 
+/*handleSearchAgain = (e) => {
+  e.preventDefault();
+  const ward=this.state.ward;
+  const precinct=this.state.precinct;
+  const vscore=this.state.vscore;
+  fetch(`http://localhost:5000/walklist?WRD=${ward}&PCT=${precinct}&VoteScore=${vscore}` )
+  .then(res => res.json()) 
+  .then(json => {
+    this.setState({
+      results: json,
+      searched: false,
+      viewBy: null,
+      precinct: precinct,
+      ward: ward,
+      vscore: vscore
+    })
+  });  
+}*/
+
 
 handleViewMoreInfo = (voterID) => {
       fetch(`http://localhost:5000/electiondata?voter_reg_num=${voterID}` )
@@ -107,8 +132,8 @@ handleViewMoreInfo = (voterID) => {
   }
 
   render() {
-    let {viewBy, results, searched, pct, wrd, clicked, voters, viewVoterInfo, elections} = this.state;
-    console.log(wrd);
+    let {viewBy, results, searched, pct, wrd, precinct, ward, vscore, voters, viewVoterInfo, elections} = this.state;
+    console.log(precinct, ward, vscore);
   if (pct && wrd) {
     const precinct = 
         <select ref="PCT">
@@ -276,16 +301,17 @@ handleViewMoreInfo = (voterID) => {
         <div>
         <form>
             View By Street:
-              <select onChange={this.handleSort}>
+              <FormControl className={classes.Select} componentClass="select" onChange={this.handleSort}>
                 <option value="" selected>View All</option>
                 {addresses.sort().map(address => (
                 <option value={address} key={address}>
                   {address}
                 </option>
               ))}
-              </select>
+              </FormControl>
         </form>
-        <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
+          {sheet}
+          <form className={classes.RunForm} action="/walklist" method="get" onSubmit={this.handleSubmit} >
             {wards}
             {precincts}
             <FormControl className={classes.Select} componentClass="select" inputRef={ref => {this.VScore=ref}} >
@@ -307,7 +333,6 @@ handleViewMoreInfo = (voterID) => {
               value="RUN">
             </input>
           </form> 
-          {sheet}
         </div>
       )
     }; 
@@ -330,14 +355,14 @@ handleViewMoreInfo = (voterID) => {
     <div>
       <form>
         View By Street:
-          <select className={classes.Select} onChange={this.handleSort}>
+          <FormControl componentClass="select" className={classes.Select} onChange={this.handleSort}>
             <option value="">View All</option>
           {addresses.sort().map(address => (
             <option value={address} key={address}>
               {address}
             </option>
           ))}
-        </select>
+        </FormControl>
       </form>
       {sheet}
       <form action="/walklist" method="get" onSubmit={this.handleSubmit} >

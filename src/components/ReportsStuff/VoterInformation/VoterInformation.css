@@ -1,5 +1,6 @@
 .Card {
     margin: 15px auto;
+    margin-bottom: 0;
     min-width: 90vw; 
     max-width: 90vw;
     height: auto;
