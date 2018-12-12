@@ -27,7 +27,7 @@ export default class VotersCards extends Component {
         };
 
         const voterName = this.refs.name.value;
-        fetch('http://localhost:5000/voterdata?name=' + voterName)
+        fetch('10.1.10.81/voterdata?name=' + voterName)
         .then(res => res.json()) 
         .then(json => {
           this.setState({
