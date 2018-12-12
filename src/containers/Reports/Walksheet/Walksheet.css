@@ -19,6 +19,7 @@ form {
     top: 0;
     margin-bottom: 20px;
     background: #DFDFDF;
+    
 }
 .Select {
     border-radius: 5px;
@@ -33,7 +34,7 @@ form {
     outline: none;
     border-radius: 5px;
     color: #FFFFFF;
-    width: 30vw;
+    width: 25vw;
     transition: 50ms;
     box-shadow: 0 3px 6px lightgray;
     min-height: 30px;
@@ -134,12 +135,27 @@ form {
     font-size: 2.4rem;
 }
 
-.SubHeading {
+.SubHeading, .View {
     color: #707070;
     font-weight: bold;
 }
 
+.View {
+    font-size: 1.4rem;
+}
 .RunForm {
     position: sticky;
     bottom: 50px;
+    margin-top: 25px;
 }
+
+.Collecting {
+    margin-bottom: 50px;
+}
+
+.Loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+

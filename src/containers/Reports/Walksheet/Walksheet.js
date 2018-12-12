@@ -3,6 +3,9 @@ import classes from './Walksheet.css';
 import VoterInformation from '../../../components/ReportsStuff/VoterInformation/VoterInformation'
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 import {Call} from '@material-ui/icons/'
+import ReportsPage from '../../../components/ReportsStuff/ReportsPage'
+import { PropagateLoader } from 'react-spinners';
+
 
 export default class Walksheet extends Component {
 
@@ -26,6 +29,7 @@ export default class Walksheet extends Component {
     precinct: null,
     ward: null,
     vscore: null,
+    phone: "",
 
   }
 
@@ -81,6 +85,14 @@ export default class Walksheet extends Component {
     }
   }
 
+  handlePhoneSort = (e) => {
+    if (!this.state.phone) {
+      this.setState({phone: e.target.value })
+    } else if (this.state.phone) {
+      this.setState({phone: e.target.value})
+    }
+  }
+
   viewAllHandler = () => {
     if (this.state.viewBy) {
       this.setState({viewBy: null})
@@ -102,26 +114,6 @@ export default class Walksheet extends Component {
     })
 }
 
-/*handleSearchAgain = (e) => {
-  e.preventDefault();
-  const ward=this.state.ward;
-  const precinct=this.state.precinct;
-  const vscore=this.state.vscore;
-  fetch(`http://localhost:5000/walklist?WRD=${ward}&PCT=${precinct}&VoteScore=${vscore}` )
-  .then(res => res.json()) 
-  .then(json => {
-    this.setState({
-      results: json,
-      searched: false,
-      viewBy: null,
-      precinct: precinct,
-      ward: ward,
-      vscore: vscore
-    })
-  });  
-}*/
-
-
 handleViewMoreInfo = (voterID) => {
       fetch(`http://localhost:5000/electiondata?voter_reg_num=${voterID}` )
       .then(res => res.json())
@@ -132,8 +124,8 @@ handleViewMoreInfo = (voterID) => {
   }
 
   render() {
-    let {viewBy, results, searched, pct, wrd, precinct, ward, vscore, voters, viewVoterInfo, elections} = this.state;
-    console.log(precinct, ward, vscore);
+    let {viewBy, results, searched, pct, wrd, precinct, ward, vscore, voters, viewVoterInfo, elections, phone} = this.state;
+    console.log({searched: searched, viewBy: viewBy});
   if (pct && wrd) {
     const precinct = 
         <select ref="PCT">
@@ -163,7 +155,6 @@ handleViewMoreInfo = (voterID) => {
               ))}
             </FormControl>
 
-       
        
        if (searched && voters && (!viewBy || viewBy) && viewVoterInfo) {
         return (
@@ -202,34 +193,14 @@ handleViewMoreInfo = (voterID) => {
     if (searched && voters && (!viewBy || viewBy)) {
       return (
         <div>
-          {Object.values(voters).map(voter => (
-              <VoterInformation
-                  name={voter['0'].name}
-                  voter_reg_num={voter['0'].voter_reg_num}
-                  Address={voter['0'].Address}
-                  City={voter['0'].City}
-                  ZipCode={voter['0']['Zip Code']}
-                  Gender={voter['0'].Gender}
-                  birthyear={voter['0']['Birth year']}
-                  voterstatus={voter['0']['Voter Status']}
-                  BOR={voter['0'].BOR}
-                  CON={voter['0'].CON}
-                  CCD={voter['0'].CCD}
-                  JUD={voter['0'].JUD}
-                  LEG={voter['0'].LEG}
-                  REP={voter['0'].REP}
-                  WRD={voter['0'].WRD}/>
+          {Object.values(voters).map(voter=>(
+            <ReportsPage
+              voterID={voter[0].voter_reg_num}
+              sfid={voter[0].SFID}
+          />
           ))}
-
-        <br/>
-        {Object.values(voters).map(voter=>( 
-          <button
-            className={classes.Submit2} 
-            onClick={() => this.handleViewMoreInfo(voter[0].voter_reg_num)}>VIEW MORE INFO
-        </button>
-        ))}
-   </div>
-      )
+        </div>
+      );
     };
     
     if (!searched) {
@@ -261,13 +232,17 @@ handleViewMoreInfo = (voterID) => {
       );
     };
 
+
+    //SEARCHED BUT NOT FILTERED VIEW
+
     if (searched && !viewBy) {
         const sheet = 
           <div>
           {results.data.map(result => {
-            if (result.Phone) {
+            if (phone === "yes" ) {
+              if (result.Phone) {
               return (
-              <div className={classes.WalksheetTable} key={result.voter_reg_num} key={result.voter_reg_num}>
+              <div className={classes.WalksheetTable} key={result.voter_reg_num}>
               <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
                 <div className={classes.Name}>{result.name}</div>
                 <div className={classes.Address}>{result.Address}</div>
@@ -278,36 +253,67 @@ handleViewMoreInfo = (voterID) => {
               <div className={classes.Divider}></div>
               <div className={classes.Phone}><a href="tel:{result.Phone}"><Call style={{color: '#8F80B7', transform: 'scale(-1.5, 1.5)'}}/></a> </div>
             </div>)
-             } else {
+             }
+            } else if (phone === "no") {
                return (
                 <div className={classes.WalksheetTable} key={result.voter_reg_num} key={result.voter_reg_num}>
-                <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
-                <div className={classes.Name}>{result.name}</div>
-                <div className={classes.Address}>{result.Address}</div>
-                <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
-                <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
-                <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
-              </div>
-
-            </div>
+                  <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                    <div className={classes.Name}>{result.name}</div>
+                    <div className={classes.Address}>{result.Address}</div>
+                    <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                    <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                    <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+                  </div>
+                </div>
                )
+             } else if (phone === "") {
+              if (result.Phone) {
+                  return (
+                  <div className={classes.WalksheetTable} key={result.voter_reg_num}>
+                  <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                    <div className={classes.Name}>{result.name}</div>
+                    <div className={classes.Address}>{result.Address}</div>
+                    <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                    <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                    <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+                  </div>
+                  <div className={classes.Divider}></div>
+                  <div className={classes.Phone}><a href="tel:{result.Phone}"><Call style={{color: '#8F80B7', transform: 'scale(-1.5, 1.5)'}}/></a> </div>
+                </div>)
+                } else {
+                  return (
+                    <div className={classes.WalksheetTable} key={result.voter_reg_num} key={result.voter_reg_num}>
+                  <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                    <div className={classes.Name}>{result.name}</div>
+                    <div className={classes.Address}>{result.Address}</div>
+                    <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                    <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                    <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+                  </div>
+                </div>
+                  )
+                }
              }
           })}
           </div>;
-        
         const addresses = results.data.map(address => (address.Address).split(" ").slice(1,4).join(' ')).filter(this.onlyUnique);
-
       return (
         <div>
         <form>
-            View By Street:
+            <span className={classes.View}>View By Street:</span>
               <FormControl className={classes.Select} componentClass="select" onChange={this.handleSort}>
-                <option value="" selected>View All</option>
+                <option value="" selected>ALL</option>
                 {addresses.sort().map(address => (
                 <option value={address} key={address}>
                   {address}
                 </option>
-              ))}
+              ))}x
+              </FormControl>
+              <span className={classes.View}>View By Phone:</span>
+              <FormControl className={classes.Select} componentClass="select" onChange={this.handlePhoneSort}>
+                <option value="" selected>ALL</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
               </FormControl>
         </form>
           {sheet}
@@ -337,8 +343,10 @@ handleViewMoreInfo = (voterID) => {
       )
     }; 
 
+
+    //SEARCHED AND FILTERED BY ADDRESS
     if (searched && viewBy) {
-        const sheet = 
+        /*const sheet = 
           <div>
           {results.data
           .filter(result => result.Address.includes(viewBy))
@@ -349,21 +357,90 @@ handleViewMoreInfo = (voterID) => {
               <div >{result.CandScore}/{result.VoteScore}</div>
             </div>  
           ))}
+          </div>;*/
+
+          const sheet = 
+          <div>
+          {results.data
+          .filter(result=>result.Address.includes(viewBy))
+          .map(result => {
+            if (phone === "yes" ) {
+              if (result.Phone) {
+              return (
+              <div className={classes.WalksheetTable} key={result.voter_reg_num}>
+              <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                <div className={classes.Name}>{result.name}</div>
+                <div className={classes.Address}>{result.Address}</div>
+                <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+              </div>
+              <div className={classes.Divider}></div>
+              <div className={classes.Phone}><a href="tel:{result.Phone}"><Call style={{color: '#8F80B7', transform: 'scale(-1.5, 1.5)'}}/></a> </div>
+            </div>)
+             }
+            } else if (phone === "no") {
+               return (
+                <div className={classes.WalksheetTable} key={result.voter_reg_num} key={result.voter_reg_num}>
+                  <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                    <div className={classes.Name}>{result.name}</div>
+                    <div className={classes.Address}>{result.Address}</div>
+                    <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                    <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                    <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+                  </div>
+                </div>
+               )
+             } else if (phone === "") {
+              if (result.Phone) {
+                  return (
+                  <div className={classes.WalksheetTable} key={result.voter_reg_num}>
+                  <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                    <div className={classes.Name}>{result.name}</div>
+                    <div className={classes.Address}>{result.Address}</div>
+                    <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                    <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                    <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+                  </div>
+                  <div className={classes.Divider}></div>
+                  <div className={classes.Phone}><a href="tel:{result.Phone}"><Call style={{color: '#8F80B7', transform: 'scale(-1.5, 1.5)'}}/></a> </div>
+                </div>)
+                } else {
+                  return (
+                    <div className={classes.WalksheetTable} key={result.voter_reg_num} key={result.voter_reg_num}>
+                  <div  onClick={() => this.nameClickHandler(result.name)} className={classes.Info}>
+                    <div className={classes.Name}>{result.name}</div>
+                    <div className={classes.Address}>{result.Address}</div>
+                    <div className={classes.BirthYear}><span className={classes.SubHeading}>Age:</span> {Math.floor(2018-result['Birth year'])}</div> &emsp;
+                    <div className={classes.Status}><span className={classes.SubHeading}>Voter Status:</span>{result['Voter Status']}</div> &emsp;
+                    <div className={classes.Scores}><span className={classes.SubHeading}>Voter Score:</span>{result.CandScore}/{result.VoteScore}</div>
+                  </div>
+                </div>
+                  )
+                }
+             }
+          })}
           </div>;
     const addresses = results.data.map(address => (address.Address).split(" ").slice(1,4).join(' ')).filter(this.onlyUnique); 
   return (
     <div>
-      <form>
-        View By Street:
-          <FormControl componentClass="select" className={classes.Select} onChange={this.handleSort}>
-            <option value="">View All</option>
-          {addresses.sort().map(address => (
-            <option value={address} key={address}>
-              {address}
-            </option>
-          ))}
-        </FormControl>
-      </form>
+        <form>
+            <span className={classes.View}>View By Street:</span>
+              <FormControl className={classes.Select} componentClass="select" onChange={this.handleSort}>
+                <option value="" selected>ALL</option>
+                {addresses.sort().map(address => (
+                <option value={address} key={address}>
+                  {address}
+                </option>
+              ))}x
+              </FormControl>
+              <span className={classes.View}>View By Phone:</span>
+              <FormControl className={classes.Select} componentClass="select" onChange={this.handlePhoneSort}>
+                <option value="" selected>ALL</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </FormControl>
+        </form>
       {sheet}
       <form action="/walklist" method="get" onSubmit={this.handleSubmit} >
           {wards}
@@ -390,7 +467,19 @@ handleViewMoreInfo = (voterID) => {
     </div>
   )
     };
-  } else return <div>COLLECTING DATAS</div>
+  } else { 
+    return (
+    <div className={classes.Collecting}>
+      <div className={classes.Loader}>
+        <PropagateLoader
+          sizeUnit={"px"}
+          size={20}
+          color={'darkgray'}/>
+      </div>
+     
+    </div>
+  )
+  }
   }
     
 }

@@ -10,6 +10,7 @@ import Aux from './auxilliary'
 import BottomBar from './components/BottomBar/BottomBar';
 
 
+
 class App extends Component {
 
   state={
@@ -18,7 +19,6 @@ class App extends Component {
 
   render() {
     return (
-        <Aux>
           <div className={classes.App}>
             <Switch>
               <Route exact path='/' component={Login}/>
@@ -30,7 +30,6 @@ class App extends Component {
                 </div>
             </Switch>
           </div>
-        </Aux>
     )
 
   }

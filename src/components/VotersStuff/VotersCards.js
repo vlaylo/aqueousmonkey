@@ -11,6 +11,7 @@ export default class VotersCards extends Component {
         results: '',
         searched: false,
         view: null,
+        sfid: null,
       }
     
      handleSubmit = (e) => {
@@ -36,11 +37,20 @@ export default class VotersCards extends Component {
       };
     
       
-      handleViewInfo = (name) => {
+      /*handleViewInfo = (name) => {
         if (this.state.view == null) {
           this.setState({view: name})
         };
         console.log(this.state.view);
+      }*/
+      handleViewInfo = (voterID) => {
+        if (this.state.view == null) {
+          this.setState({view: voterID})
+        };
+      }
+
+      storeSFID = (sfid) => {
+        this.setState({sfid: sfid})
       }
 
       returnHandler = (e) => {
@@ -59,7 +69,8 @@ export default class VotersCards extends Component {
       }
       render() {
         
-        let {results, searched, view, query} = this.state;
+        let {results, searched, view, query, sfid} = this.state;
+        console.log(view, sfid)
         //VIEW  INFORMATION ABOUT SELECTION
         if (searched && results && view) {
           return(
@@ -69,7 +80,7 @@ export default class VotersCards extends Component {
                     <input
                         className={classes.Input}
                         type="search"
-                        placeholder="SEARCH"
+                        placeholder="Search"
                         onChange={this.queryHandler}
                         name="name"
                         ref="name"
@@ -85,7 +96,8 @@ export default class VotersCards extends Component {
               <div></div>
             </div>
               <ReportsPage
-                name={view}>
+                voterID={view}
+                sfid={sfid}>
               </ReportsPage>
             </div>
         )
@@ -100,7 +112,7 @@ export default class VotersCards extends Component {
                     <input
                         className={classes.Input}
                         type="search"
-                        placeholder="SEARCH"
+                        placeholder="Search"
                         onChange={this.queryHandler}
                         name="name"
                         ref="name"
@@ -119,7 +131,7 @@ export default class VotersCards extends Component {
                 <div className={classes.Query}>Showing results for: "{query}" </div>
                 {results.data.map(result => ( 
                   <Fade duration={1000}>
-                    <div className={classes.Cards} key={result.voter_reg_num}  onClick={() => this.handleViewInfo(result.voter_reg_num)} key={result.voter_reg_num}>
+                    <div className={classes.Cards} key={result.voter_reg_num}  onClick={() => {this.handleViewInfo(result.voter_reg_num); this.storeSFID(result.SFID)}} key={result.voter_reg_num}>
                       <div className={classes.Avatar}>{result.name['1']}{result.name.split(" ").pop().charAt(0)}</div>
                       <div className={classes.Info}>
                         <div className={classes.Heading}>{result.name}</div>
@@ -158,7 +170,7 @@ export default class VotersCards extends Component {
                     type="submit"
                     /> 
               </form>
-              <div></div>
+              <div className={classes.Query}>Search for voter information here.  Type the voter's name in the search field and click search to begin.</div>
          </div>
         )};
     
