@@ -1,5 +1,5 @@
 {
-  "proxy": "10.1.10.81/",
+  "proxy": "http://10.1.10.81/",
   "homepage": "http://vlaylo.github.io/aqueousmonkey",
   "name": "sinfronmobile",
   "version": "0.1.0",
